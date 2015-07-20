@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  get 'pages/add'
+  get '*path/add', to: 'pages#add'
 
-  get 'pages/edit'
+  post '*path/create', to: 'pages#create'
 
-  get 'pages/view'
+  get '*path/edit', to: 'pages#edit'
+
+  post '*path/update', to: 'pages#update'
+
+  get '*path', to: 'pages#view'
+
+  get '', to: 'pages#view'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

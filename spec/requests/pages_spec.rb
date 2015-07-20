@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe "Pages" do
-  describe "GET /pages" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get pages_index_path
-      response.status.should be(200)
+  describe "Root page" do
+    it "should return list of pages" do
+      Page.create(name: "Test name", content: "Test content")
+
+      visit '/'
+      expect(page).to have_content('Test name');
     end
   end
 end

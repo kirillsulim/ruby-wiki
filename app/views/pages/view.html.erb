@@ -1,2 +1,7 @@
-<h1>Pages#view</h1>
-<p>Find me in app/views/pages/view.html.erb</p>
+<h1><%= @path %></h1>
+
+<ul>
+  <% for @page in @pages -%>
+  <li><%= @page.name %></li>
+  <% end -%>
+</ul>
