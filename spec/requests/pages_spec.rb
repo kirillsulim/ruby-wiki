@@ -36,4 +36,27 @@ describe "Pages" do
       expect(page).to have_content('Test content')
     end
   end
+
+  describe "Edit page" do
+    it "should fill edit form with title and content" do
+      Page.create(name: 'test', title: 'Test title', content: 'Test content')
+
+      visit '/test/edit'
+      expect(page).to have_field('Title', with: 'Test title')
+      expect(page).to have_field('Content', with: 'Test content')
+    end
+
+    it "should save edited values" do
+      Page.create(name: 'test', title: 'Test title', content: 'Test content')
+
+      visit '/test/edit'
+      fill_in 'Title', with: 'Edited title'
+      fill_in 'Content', with: 'Edited content'
+      click_button 'Save Page'
+
+      page = Page.find_by name: 'test'
+      expect(page[:title]).to eq('Edited title')
+      expect(page[:content]).to eq('Edited content')
+    end
+  end
 end

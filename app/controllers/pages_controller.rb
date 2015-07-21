@@ -10,9 +10,14 @@ class PagesController < ApplicationController
   end
 
   def edit
+    @page = Page.find_by name: params[:path]
   end
 
   def update
+    page = Page.find_by name: params[:path]
+    page.update_attributes(page_params)
+    page.save
+
     redirect_to action: 'view'
   end
 
