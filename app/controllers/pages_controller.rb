@@ -3,6 +3,9 @@ class PagesController < ApplicationController
   end
 
   def create
+    page = Page.new(page_params)
+    page.save
+
     redirect_to action: 'view'
   end
 
@@ -17,5 +20,10 @@ class PagesController < ApplicationController
     @path = params[:path]
     @path = @path.split('/') if @path
     @pages = Page.all
+  end
+
+  private
+  def page_params
+    params.require(:page).permit(:name, :title, :content)
   end
 end

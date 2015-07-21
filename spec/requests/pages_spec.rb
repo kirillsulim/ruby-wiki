@@ -6,7 +6,24 @@ describe "Pages" do
       Page.create(name: "Test name", content: "Test content")
 
       visit '/'
-      expect(page).to have_content('Test name');
+      expect(page).to have_content('Test name')
+    end
+  end
+
+  describe "Root Add page" do
+    it "should show add form" do
+      visit '/add'
+      expect(page).to have_selector('form')
+    end
+
+    it "should save page from form" do
+      visit '/add'
+      fill_in 'Name', with: 'Test name'
+      fill_in 'Title', with: 'Test_title'
+      fill_in 'Content', with: 'Test content one two three'
+      click_button 'Save Page'
+
+      expect(page).to have_content('Test name')
     end
   end
 end
