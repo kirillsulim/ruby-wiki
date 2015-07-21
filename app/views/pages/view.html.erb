@@ -1,5 +1,11 @@
-<h1><%= @path %></h1>
+<h1><%= @title %></h1>
+<p>
+  <%= @content %>
+</p>
 
+<% if @title %>
+<h2>Subpages:</h2>
+<% end %>
 <ul>
   <% for @page in @pages -%>
   <li><%= @page.name %></li>

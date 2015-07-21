@@ -17,9 +17,15 @@ class PagesController < ApplicationController
   end
 
   def view
+    @pages = []
     @path = params[:path]
-    @path = @path.split('/') if @path
-    @pages = Page.all
+    if @path
+      page = Page.find_by name: @path
+      @title = page[:title]
+      @content = page[:content]
+    else
+      @pages = Page.all()
+    end
   end
 
   private
