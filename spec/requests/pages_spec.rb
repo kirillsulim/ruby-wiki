@@ -8,6 +8,14 @@ describe "Pages" do
       visit '/'
       expect(page).to have_content('Test name')
     end
+
+    it "should contains links to pages" do
+      Page.create(name: "Test_name", title: 'Test title', content: 'Test content')
+
+      visit '/'
+      click_link('Test title')
+      expect(page).to have_content('Test content')
+    end
   end
 
   describe "Root Add page" do
@@ -23,7 +31,7 @@ describe "Pages" do
       fill_in 'Content', with: 'Test content one two three'
       click_button 'Save Page'
 
-      expect(page).to have_content('Test name')
+      expect(page).to have_content('Test_title')
     end
   end
 
