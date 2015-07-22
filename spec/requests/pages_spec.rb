@@ -41,6 +41,10 @@ describe "Pages" do
 
       expect(page).to have_content('Error')
     end
+
+    it "should support Cyrillic characters in name" do
+      # TODO: Test Cyrillic
+    end
   end
 
   describe "View page" do
