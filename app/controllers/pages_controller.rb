@@ -1,12 +1,19 @@
 class PagesController < ApplicationController
   def add
+    if !@page
+      @page = Page.new
+    end
   end
 
   def create
-    page = Page.new(page_params)
-    page.save
+    @page = Page.new(page_params)
+    @page.save
 
-    redirect_to action: 'view'
+    if @page.valid?
+      redirect_to action: 'view'
+    else
+      render 'add'
+    end
   end
 
   def edit
@@ -22,12 +29,12 @@ class PagesController < ApplicationController
   end
 
   def view
-    @pages = []
     @path = params[:path]
     if @path
       page = Page.find_by name: @path
       @title = page[:title]
       @content = page[:content]
+      @pages = []
     else
       @pages = Page.all()
     end
