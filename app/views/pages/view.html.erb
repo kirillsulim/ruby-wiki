@@ -1,0 +1,13 @@
+<h1><%= @title %></h1>
+<p>
+  <%= @content %>
+</p>
+
+<% if @title %>
+<h2>Subpages:</h2>
+<% end %>
+<ul>
+  <% for @page in @pages -%>
+  <li><%= link_to @page.title, @page.name %></li>
+  <% end -%>
+</ul>
