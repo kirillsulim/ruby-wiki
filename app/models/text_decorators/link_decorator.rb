@@ -1,5 +1,5 @@
 class LinkDecorator
-  def decorate(text)
+  def self.decorate(text)
     text.gsub(/\(\(((\w+)(\/\w+)*) (.+?)\)\)/, "<a href='/\\1'>\\4</a>")
   end
 end

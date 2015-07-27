@@ -117,4 +117,29 @@ describe "Pages" do
       expect{visit '/not/existing/page/add'}.to raise_error(ActionController::RoutingError)
     end
   end
+
+  describe "Decorators" do
+    it "should decorate bold content on the fly" do
+      Page.create(name: 'n', full_name: 'n', content: "Some **bold** content!")
+
+      visit '/n'
+      expect(find("p").find("b")).to have_content("bold")
+    end
+
+    it "should decorate italic content on the fly" do
+      Page.create(name: 'n', full_name: 'n', content: "Some \\\\italic\\\\ content!")
+
+      visit '/n'
+      expect(find("p").find("i")).to have_content("italic")
+    end
+
+    it "should decorate link content on the fly" do
+      Page.create(name: 'n', full_name: 'n', content: "Some ((l link here))!")
+      Page.create(name: 'l', full_name: 'l', content: "You found me!")
+
+      visit '/n'
+      click_link("link here")
+      expect(page).to have_content("You found me!")
+    end
+  end
 end
