@@ -1,6 +1,7 @@
 require_relative '../models/text_decorators/bold_decorator'
 require_relative '../models/text_decorators/italic_decorator'
 require_relative '../models/text_decorators/link_decorator'
+require_relative '../models/text_decorators/new_line_decorator'
 
 module PagesHelper
   # Expect {p1 => {}, p2 => {p2sub => {} } }
@@ -18,6 +19,7 @@ module PagesHelper
     BoldDecorator,
     ItalicDecorator,
     LinkDecorator,
+    NewLineDecorator,
   ]
 
   def decorate(text)
