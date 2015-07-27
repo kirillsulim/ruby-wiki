@@ -5,13 +5,15 @@
   </p>
 <% end %>
 <ul>
-  <% for subpage in @pages -%>
-  <li><%= link_to subpage.title, subpage.full_name %></li>
-  <% end -%>
+  <% @pages.each do |p|%>
+  <%= raw recursive_tree p %>
+  <% end %>
 </ul><br/>
 <% if @page %>
-  <%= link_to "Add subpage", @page.full_name + "/add" %>
-  <%= link_to "Edit", @page.full_name + "/edit" %>
+  <%= link_to "Add subpage", '/' + @page.full_name + '/add' %>
+  <%= link_to "Edit", '/' + @page.full_name + '/edit' %>
 <% else %>
   <%= link_to "Add root page", "/add" %>
 <% end %>
+
+<%= debug @pages %>

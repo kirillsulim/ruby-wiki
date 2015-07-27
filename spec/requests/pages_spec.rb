@@ -14,7 +14,7 @@ describe "Pages" do
 
     it "should contains links to pages" do
       Page.create(name: "Test_name",
-                  full_name: "Test_name", 
+                  full_name: "Test_name",
                   title: 'Test title',
                   content: 'Test content')
 
@@ -109,6 +109,10 @@ describe "Pages" do
       click_link 'subpage'
 
       expect(page).to have_content('subcontent')
+    end
+
+    it "should not allow to add subpage to unexisted page" do
+      expect{visit '/not/existing/page/add'}.to raise_error(ActionController::RoutingError)
     end
   end
 end

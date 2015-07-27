@@ -1,5 +1,10 @@
 class PagesController < ApplicationController
   def add
+    # Check if parent page exist
+    path = params[:path]
+    if path
+      Page.find_by(full_name: path) or not_found
+    end
     if !@page
       @page = Page.new
     end
@@ -13,7 +18,9 @@ class PagesController < ApplicationController
 
     path = params[:path]
     if path
+      parent = Page.find_by(full_name: path) or not_found
       page.full_name = "#{path}/#{page.name}"
+      page.parent = parent
     else
       page.full_name = page.name
     end
@@ -43,10 +50,13 @@ class PagesController < ApplicationController
     path = params[:path]
     if path
       @page = Page.find_by(full_name: path) or not_found
-      @pages = []
+      @pages = @page.descendants.arrange
     else
       @page = nil
-      @pages = Page.all()
+      @pages = []
+      Page.roots.each do |root|
+        @pages.push(root.subtree.arrange)
+      end
     end
   end
 
