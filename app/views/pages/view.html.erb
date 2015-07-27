@@ -3,6 +3,12 @@
   <p>
     <%= @page.content %>
   </p>
+  <h2>Subpages:</h2>
+<% else %>
+  <h1>Main page</h1>
+  <p>
+    Hello! This is simple wiki. You can see all pages below.
+  </p>
 <% end %>
 <ul>
   <% @pages.each do |p|%>
@@ -15,5 +21,3 @@
 <% else %>
   <%= link_to "Add root page", "/add" %>
 <% end %>
-
-<%= debug @pages %>
