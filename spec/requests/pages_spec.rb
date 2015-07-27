@@ -48,9 +48,8 @@ describe "Pages" do
       expect(page).to have_content('Error')
     end
 
-    it "should support Cyrillic characters in name" do
-      # TODO: Test Cyrillic
-    end
+    # TODO: Test Cyrillic
+    #it "should support Cyrillic characters in name" do end
   end
 
   describe "View page" do
@@ -79,7 +78,10 @@ describe "Pages" do
     end
 
     it "should save edited values" do
-      Page.create(name: 'test', title: 'Test title', content: 'Test content')
+      Page.create(name: 'test',
+                  full_name: 'test',
+                  title: 'Test title',
+                  content: 'Test content')
 
       visit '/test/edit'
       fill_in 'Title', with: 'Edited title'

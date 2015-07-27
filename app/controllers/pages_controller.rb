@@ -35,22 +35,23 @@ class PagesController < ApplicationController
   end
 
   def edit
-    @page = Page.find_by name: params[:path]
+    @page = Page.find_by(full_name: params[:path]) or not_found
   end
 
   def update
-    page = Page.find_by name: params[:path]
-    page.update_attributes(page_params)
+    page = Page.find_by(full_name: params[:path]) or not_found
+    page.title = params[:page][:title]
+    page.content = params[:page][:content]
     page.save
 
-    redirect_to action: 'view'
+    redirect_to action: 'view', path: page.full_name
   end
 
   def view
     path = params[:path]
     if path
       @page = Page.find_by(full_name: path) or not_found
-      @pages = @page.descendants.arrange
+      @pages = [@page.descendants.arrange]
     else
       @page = nil
       @pages = []
