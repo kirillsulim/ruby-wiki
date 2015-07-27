@@ -3,14 +3,20 @@ require 'spec_helper'
 describe "Pages" do
   describe "Root page" do
     it "should return list of pages" do
-      Page.create(name: "Test_name", title: 'Test title', content: "Test content")
+      Page.create(name: "Test_name",
+                  full_name: "Test_name",
+                  title: 'Test title',
+                  content: "Test content")
 
       visit '/'
       expect(page).to have_content('Test title')
     end
 
     it "should contains links to pages" do
-      Page.create(name: "Test_name", title: 'Test title', content: 'Test content')
+      Page.create(name: "Test_name",
+                  full_name: "Test_name", 
+                  title: 'Test title',
+                  content: 'Test content')
 
       visit '/'
       click_link('Test title')
@@ -49,7 +55,10 @@ describe "Pages" do
 
   describe "View page" do
     it "should show title and content" do
-      Page.create(name: 'Test_name', title: 'Test title', content: 'Test content')
+      Page.create(name: 'Test_name',
+                  full_name: 'Test_name',
+                  title: 'Test title',
+                  content: 'Test content')
 
       visit '/Test_name'
       expect(page).to have_content('Test title')
@@ -59,7 +68,10 @@ describe "Pages" do
 
   describe "Edit page" do
     it "should fill edit form with title and content" do
-      Page.create(name: 'test', title: 'Test title', content: 'Test content')
+      Page.create(name: 'test',
+                  full_name: 'test',
+                  title: 'Test title',
+                  content: 'Test content')
 
       visit '/test/edit'
       expect(page).to have_field('Title', with: 'Test title')
@@ -77,6 +89,26 @@ describe "Pages" do
       page = Page.find_by name: 'test'
       expect(page[:title]).to eq('Edited title')
       expect(page[:content]).to eq('Edited content')
+    end
+  end
+
+  describe "Add page" do
+    it "should create subpage" do
+      visit '/add'
+      fill_in 'Name', with: 'test'
+      fill_in 'Title', with: 'test'
+      click_button 'Save Page'
+
+      visit 'test/add'
+      fill_in 'Name', with: 'subpage'
+      fill_in 'Title', with: 'subpage'
+      fill_in 'Content', with: 'subcontent'
+      click_button 'Save Page'
+
+      visit '/test'
+      click_link 'subpage'
+
+      expect(page).to have_content('subcontent')
     end
   end
 end
