@@ -1,7 +1,20 @@
 <% if @page %>
+  <p>
+    <% if @page.parent %>
+      <a href='/<%= @page.parent.full_name %>'>Up</a>
+    <% end %> <a href='/'>Main page</a>
+  </p>
   <h1><%= @page.title %></h1>
   <p>
-    <%= @page.content %>
+    <%= raw decorate @page.content %>
+  </p>
+  <% unless @pages[0].empty? %>
+    <h2>Subpages:</h2>
+  <% end %>
+<% else %>
+  <h1>Main page</h1>
+  <p>
+    Hello! This is simple wiki. You can see all pages below.
   </p>
 <% end %>
 <ul>
@@ -15,5 +28,3 @@
 <% else %>
   <%= link_to "Add root page", "/add" %>
 <% end %>
-
-<%= debug @pages %>
